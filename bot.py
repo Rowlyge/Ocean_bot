@@ -8,7 +8,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemo
 from db_queries import get_expeditions_by_region, get_unique_expeditions, get_coordinates_for_region
 
 # 🔹 Настройки
-API_TOKEN = "8307651561:AAGjxStMaM5w6eccOvBpU0TRqCel_4Ys2NE"
+API_TOKEN = "..."
 
 # Инициализация
 bot = Bot(token=API_TOKEN)
