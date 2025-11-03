@@ -1,19 +1,39 @@
-import asyncio
 import logging
-from datetime import datetime, timedelta
-from aiogram import Bot, Dispatcher, types
-from aiogram.filters import CommandStart, Command
-from aiogram.enums import ParseMode
-from aiogram.types import ReplyKeyboardMarkup, KeyboardButton, ReplyKeyboardRemove
-from db_queries import get_expeditions_by_region, get_unique_expeditions, get_coordinates_for_region
+import asyncio
+from datetime import datetime            # <- для вычисления длительности экспедиций
 
-# 🔹 Настройки
-API_TOKEN = "8307651561:AAGjxStMaM5w6eccOvBpU0TRqCel_4Ys2NE"
+from aiogram import Bot, Dispatcher, types
+from aiogram.enums import ParseMode
+from aiogram.client.default import DefaultBotProperties
+from aiogram.filters import CommandStart, Command
+from aiogram.types import (
+    Message,
+    ReplyKeyboardMarkup,
+    KeyboardButton,
+    ReplyKeyboardRemove     # <- необходимо для скрытия клавиатуры
+)
+
+from db_queries import get_expeditions, get_expedition_by_id
+from db import get_connection
+
+from db_queries import (
+    get_expeditions_by_region,
+    get_unique_expeditions,
+    get_coordinates_for_region
+)
+
+# --- Настройка логгирования ---
+logging.basicConfig(level=logging.INFO)
+
+# Настройки
+API_TOKEN = "..."
 
 # Инициализация
-bot = Bot(token=API_TOKEN)
+bot = Bot(
+    token=API_TOKEN,
+    default=DefaultBotProperties(parse_mode=ParseMode.MARKDOWN)
+)
 dp = Dispatcher()
-logging.basicConfig(level=logging.INFO)
 
 # 🔹 Создаем клавиатуру с океанами
 def get_oceans_keyboard():
